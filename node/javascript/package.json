@@ -10,12 +10,19 @@
   "scripts": {
     "prettier": "prettier --check .",
     "eslint": "eslint .",
-    "start-hello": "nodemon ./01_hello/main.js"
+    "start-hello": "nodemon ./01_hello/main.js",
+    "start-object": "nodemon ./02_object/main.js",
+    "start-module": "nodemon ./03_module/main.js",
+    "start-path": "nodemon ./04_path/main.js",
+    "start-os": "nodemon ./05_os/main.js",
+    "start-fs": "nodemon ./06_fs/main.js",
+    "start-events": "nodemon ./07_events/main.js",
+    "start-http": "nodemon ./08_http/main.js"
   },
   "devDependencies": {
     "eslint": "^8.16.0",
     "eslint-config-prettier": "^8.5.0",
     "nodemon": "^2.0.16",
-    "prettier": "2.6.2"
+    "prettier": "^2.6.2"
   }
 }
