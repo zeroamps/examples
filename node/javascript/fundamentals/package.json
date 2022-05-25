@@ -17,7 +17,8 @@
     "start-os": "nodemon ./05_os/main.js",
     "start-fs": "nodemon ./06_fs/main.js",
     "start-events": "nodemon ./07_events/main.js",
-    "start-http": "nodemon ./08_http/main.js"
+    "start-http": "nodemon ./08_http/main.js",
+    "start-process": "nodemon ./09_process/main.js"
   },
   "devDependencies": {
     "eslint": "^8.16.0",
