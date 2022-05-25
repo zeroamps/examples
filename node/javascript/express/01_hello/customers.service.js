@@ -16,37 +16,11 @@ const list = [
     firstName: 'Douglas',
     lastName: 'Tran',
     age: 47
-  },
-  {
-    id: 4,
-    firstName: 'Alana',
-    lastName: 'Pace',
-    age: 20
-  },
-  {
-    id: 5,
-    firstName: 'Alston',
-    lastName: 'Hogan',
-    age: 28
-  },
-  {
-    id: 6,
-    firstName: 'Simmons',
-    lastName: 'Hancock',
-    age: 44
-  },
-  {
-    id: 7,
-    firstName: 'Doreen',
-    lastName: 'Frederick',
-    age: 46
   }
 ];
 
 function find(id) {
-  const index = list.findIndex((c) => c.id === id);
-  if (index === -1) return { customer: undefined, index };
-  return { customer: list[index], index };
+  return list.find((c) => c.id === id);
 }
 
 function validate(customer) {
@@ -66,14 +40,11 @@ function create(customer) {
 }
 
 function update(customer, data) {
-  customer.firstName = data.firstName;
-  customer.lastName = data.lastName;
-  customer.age = data.age;
-  return customer;
+  return (list[list.indexOf(customer)] = { ...data });
 }
 
-function remove(index) {
-  list.splice(index, 1);
+function remove(customer) {
+  list.splice(list.indexOf(customer), 1);
 }
 
 module.exports = { list, find, validate, create, update, remove };

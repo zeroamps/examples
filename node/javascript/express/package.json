@@ -10,7 +10,9 @@
   "scripts": {
     "prettier": "prettier --check .",
     "eslint": "eslint .",
-    "start-hello": "nodemon ./01_hello/main.js"
+    "start-hello": "nodemon ./01_hello/main.js",
+    "start-validate": "nodemon ./02_validate/main.js",
+    "start-router": "nodemon ./03_router/main.js"
   },
   "devDependencies": {
     "eslint": "^8.16.0",
@@ -19,6 +21,7 @@
     "prettier": "^2.6.2"
   },
   "dependencies": {
-    "express": "^4.18.1"
+    "express": "^4.18.1",
+    "joi": "^17.6.0"
   }
 }

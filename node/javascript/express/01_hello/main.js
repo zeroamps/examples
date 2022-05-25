@@ -1,5 +1,5 @@
 const express = require('express');
-const customers = require('./customers');
+const customers = require('./customers.service');
 
 const ERR_NOT_EXIST = "doesn't exist";
 
@@ -11,7 +11,7 @@ app.get('/api/customers', (req, res) => {
 });
 
 app.get('/api/customers/:id', (req, res) => {
-  const { customer } = customers.find(parseInt(req.params.id));
+  const customer = customers.find(parseInt(req.params.id));
   if (!customer) return res.status(404).json({ error: ERR_NOT_EXIST });
   res.json(customer);
 });
@@ -23,7 +23,7 @@ app.post('/api/customers', (req, res) => {
 });
 
 app.put('/api/customers/:id', (req, res) => {
-  const { customer } = customers.find(parseInt(req.params.id));
+  const customer = customers.find(parseInt(req.params.id));
   if (!customer) return res.status(404).json({ error: ERR_NOT_EXIST });
 
   const error = customers.validate(req.body);
@@ -33,11 +33,11 @@ app.put('/api/customers/:id', (req, res) => {
 });
 
 app.delete('/api/customers/:id', (req, res) => {
-  const { index } = customers.find(parseInt(req.params.id));
-  if (index === -1) return res.status(404).json({ error: ERR_NOT_EXIST });
+  const customer = customers.find(parseInt(req.params.id));
+  if (!customer) return res.status(404).json({ error: ERR_NOT_EXIST });
 
-  customers.remove(index);
-  res.status(204).end();
+  customers.remove(customer);
+  res.status(204).json();
 });
 
 const port = process.env.PORT || 3000;
