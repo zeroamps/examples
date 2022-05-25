@@ -1,10 +1,43 @@
 const express = require('express');
-const { persons } = require('../shared/data');
+const customers = require('./customers');
+
+const ERR_NOT_EXIST = "doesn't exist";
 
 const app = express();
+app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.json(persons);
+app.get('/api/customers', (req, res) => {
+  res.json(customers.list);
+});
+
+app.get('/api/customers/:id', (req, res) => {
+  const { customer } = customers.find(parseInt(req.params.id));
+  if (!customer) return res.status(404).json({ error: ERR_NOT_EXIST });
+  res.json(customer);
+});
+
+app.post('/api/customers', (req, res) => {
+  const error = customers.validate(req.body);
+  if (error) return res.status(400).json({ error });
+  res.json(customers.create(req.body));
+});
+
+app.put('/api/customers/:id', (req, res) => {
+  const { customer } = customers.find(parseInt(req.params.id));
+  if (!customer) return res.status(404).json({ error: ERR_NOT_EXIST });
+
+  const error = customers.validate(req.body);
+  if (error) return res.status(400).json({ error });
+
+  res.json(customers.update(customer, req.body));
+});
+
+app.delete('/api/customers/:id', (req, res) => {
+  const { index } = customers.find(parseInt(req.params.id));
+  if (index === -1) return res.status(404).json({ error: ERR_NOT_EXIST });
+
+  customers.remove(index);
+  res.status(204).end();
 });
 
 const port = process.env.PORT || 3000;
