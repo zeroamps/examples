@@ -8,14 +8,15 @@
     "url": "https://github.com/zeroamps/examples.git"
   },
   "scripts": {
-    "prettier": "prettier --check .",
-    "eslint": "eslint .",
+    "lint": "eslint .",
+    "format": "prettier --check .",
     "start-hello": "nodemon ./01_hello/main.js",
     "start-crud": "nodemon ./02_crud/main.js"
   },
   "devDependencies": {
     "eslint": "^8.16.0",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
     "nodemon": "^2.0.16",
     "prettier": "^2.6.2"
   },
