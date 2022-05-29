@@ -11,7 +11,9 @@
     "lint": "eslint .",
     "format": "prettier --check .",
     "start-hello": "nodemon ./01_hello/main.js",
-    "start-crud": "nodemon ./02_crud/main.js"
+    "start-crud": "nodemon ./02_crud/main.js",
+    "start-schema": "nodemon ./03_schema/main.js",
+    "start-index": "nodemon ./04_index/main.js"
   },
   "devDependencies": {
     "eslint": "^8.16.0",
