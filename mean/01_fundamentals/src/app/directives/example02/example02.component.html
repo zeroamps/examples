@@ -1,0 +1,38 @@
+<div class="row">
+  <div class="col">
+    <div class="alert alert-info">A very simple table shows the *ngFor + trackBy directive.</div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>First</th>
+          <th>Last</th>
+          <th>Email</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let person of persons; trackBy: trackById; first as first; last as last" appMonitor>
+          <th class="align-middle">{{ person.id }}</th>
+          <td class="align-middle">{{ person.firstName }}</td>
+          <td class="align-middle">{{ person.lastName }}</td>
+          <td class="align-middle">{{ person.email }}</td>
+          <td class="align-middle">
+            <button class="btn btn-secondary btn-sm mx-1" type="button" (click)="moveUp(person)" [disabled]="first">
+              <i class="bi-caret-up-square"></i>
+            </button>
+            <button class="btn btn-secondary btn-sm mx-1" type="button" (click)="moveDown(person)" [disabled]="last">
+              <i class="bi-caret-down-square"></i>
+            </button>
+            <button class="btn btn-danger btn-sm mx-1" type="button" (click)="delete(person)">
+              <i class="bi-x-square"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="btn btn-primary mb-3 w-100" type="button" (click)="insert()">
+      <i class="bi-+-square"></i>Insert
+    </button>
+  </div>
+</div>

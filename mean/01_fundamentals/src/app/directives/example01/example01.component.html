@@ -1,0 +1,77 @@
+<div class="row">
+  <div class="col">
+    <div class="alert alert-info">A very simple table shows the *ngFor directive.</div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>First</th>
+          <th>Last</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let person of persons; index as i; count as c; even as e" [class.bg-light]="e">
+          <th>index: {{ i }}, total: {{ c }}</th>
+          <td>{{ person.firstName }}</td>
+          <td>{{ person.lastName }}</td>
+          <td>{{ person.email }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>First</th>
+          <th>Last</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let person of persons; index as i; count as c; odd as o" [class.bg-light]="o">
+          <th>index: {{ i }}, total: {{ c }}</th>
+          <td>{{ person.firstName }}</td>
+          <td>{{ person.lastName }}</td>
+          <td>{{ person.email }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>First</th>
+          <th>Last</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let person of persons; index as i; count as c; first as f" [class.bg-light]="f">
+          <th>index: {{ i }}, total: {{ c }}</th>
+          <td>{{ person.firstName }}</td>
+          <td>{{ person.lastName }}</td>
+          <td>{{ person.email }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>First</th>
+          <th>Last</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let person of persons; index as i; count as c; last as l" [class.bg-light]="l">
+          <th>index: {{ i }}, total: {{ c }}</th>
+          <td>{{ person.firstName }}</td>
+          <td>{{ person.lastName }}</td>
+          <td>{{ person.email }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
