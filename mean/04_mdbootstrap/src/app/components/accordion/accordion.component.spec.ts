@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MdbModule } from 'src/app/shared/mdb.module';
 
 import { AccordionComponent } from './accordion.component';
 
@@ -8,6 +9,7 @@ describe('AccordionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [MdbModule],
       declarations: [AccordionComponent]
     }).compileComponents();
   });

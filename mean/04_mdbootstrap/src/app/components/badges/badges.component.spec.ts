@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MdbModule } from 'src/app/shared/mdb.module';
 
 import { BadgesComponent } from './badges.component';
 
@@ -8,6 +9,7 @@ describe('BadgesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [MdbModule],
       declarations: [BadgesComponent]
     }).compileComponents();
   });
