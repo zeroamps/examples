@@ -12,7 +12,9 @@
     "format": "prettier --check .",
     "start-hello": "nodemon ./01_hello/main.js",
     "start-validate": "nodemon ./02_validate/main.js",
-    "start-router": "nodemon ./03_router/main.js"
+    "start-router": "nodemon ./03_router/main.js",
+    "start-middleware": "nodemon ./04_middleware/main.js",
+    "start-session": "nodemon ./05_session/main.js"
   },
   "devDependencies": {
     "eslint": "^8.16.0",
@@ -23,6 +25,7 @@
   },
   "dependencies": {
     "express": "^4.18.1",
+    "express-session": "^1.17.3",
     "joi": "^17.6.0"
   }
 }
