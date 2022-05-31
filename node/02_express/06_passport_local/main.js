@@ -1,9 +1,8 @@
 const crypto = require('crypto');
 const express = require('express');
 const session = require('express-session');
-
 const passport = require('passport');
-var LocalStrategy = require('passport-local');
+const LocalStrategy = require('passport-local');
 
 const app = express();
 app.use(express.json());
@@ -27,7 +26,7 @@ function verifyPassword(password, hash, salt) {
 }
 
 passport.use(
-  new LocalStrategy(function (username, password, done) {
+  new LocalStrategy((username, password, done) => {
     const user = users.find((u) => u.username === username);
     if (!user) return done(null, false);
     if (!verifyPassword(password, user.hash, user.salt)) return done(null, false);
