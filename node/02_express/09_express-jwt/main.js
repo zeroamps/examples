@@ -3,9 +3,7 @@ const Joi = require('joi');
 const crypto = require('crypto');
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const passport = require('passport');
-const JwtStrategy = require('passport-jwt').Strategy;
-const ExtractJwt = require('passport-jwt').ExtractJwt;
+var { expressjwt } = require('express-jwt');
 
 const app = express();
 app.use(express.json());
@@ -30,22 +28,11 @@ function verifyPassword(password, hash, salt) {
 const publicKey = fs.readFileSync('./public.pem');
 const privateKey = fs.readFileSync('./private.pem');
 
-const options = { secretOrKey: publicKey, jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken() };
-passport.use(
-  new JwtStrategy(options, (payload, done) => {
-    const user = users.find((u) => u.username === payload.sub);
-    if (!user) return done(null, false);
-    return done(null, user);
-  })
-);
-
-app.use(passport.initialize());
-
 app.get('/api/public', (req, res) => {
   res.json(true);
 });
 
-app.get('/api/private', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get('/api/private', expressjwt({ secret: publicKey, algorithms: ['RS256'] }), (req, res) => {
   res.json(true);
 });
 
@@ -70,6 +57,12 @@ app.post('/api/login', validateSchema, (req, res) => {
   if (!user) return res.sendStatus(401);
   if (!verifyPassword(req.body.password, user.hash, user.salt)) return res.sendStatus(401);
   res.send({ token: jwt.sign({ sub: req.body.username }, privateKey, { algorithm: 'RS256', expiresIn: 60 }) });
+});
+
+// eslint-disable-next-line no-unused-vars
+app.use(function (err, req, res, next) {
+  if (err.name === 'UnauthorizedError') res.sendStatus(401);
+  res.sendStatus(500);
 });
 
 const port = process.env.PORT || 3000;

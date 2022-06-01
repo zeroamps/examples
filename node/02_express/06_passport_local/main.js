@@ -47,7 +47,7 @@ app.use(passport.session());
 
 function authorized(req, res, next) {
   if (req.isAuthenticated()) return next();
-  res.status(401).send('Unauthorized');
+  res.send(401);
 }
 
 app.get('/api/public', (req, res) => {
@@ -60,7 +60,7 @@ app.get('/api/private', authorized, (req, res) => {
 
 app.post('/api/login', passport.authenticate('local'), (req, res) => {
   console.log(req.session);
-  res.send('Success');
+  res.sendStatus(200);
 });
 
 const port = process.env.PORT || 3000;

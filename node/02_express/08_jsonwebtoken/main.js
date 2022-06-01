@@ -3,9 +3,6 @@ const Joi = require('joi');
 const crypto = require('crypto');
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const passport = require('passport');
-const JwtStrategy = require('passport-jwt').Strategy;
-const ExtractJwt = require('passport-jwt').ExtractJwt;
 
 const app = express();
 app.use(express.json());
@@ -30,22 +27,32 @@ function verifyPassword(password, hash, salt) {
 const publicKey = fs.readFileSync('./public.pem');
 const privateKey = fs.readFileSync('./private.pem');
 
-const options = { secretOrKey: publicKey, jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken() };
-passport.use(
-  new JwtStrategy(options, (payload, done) => {
-    const user = users.find((u) => u.username === payload.sub);
-    if (!user) return done(null, false);
-    return done(null, user);
-  })
-);
-
-app.use(passport.initialize());
-
 app.get('/api/public', (req, res) => {
   res.json(true);
 });
 
-app.get('/api/private', passport.authenticate('jwt', { session: false }), (req, res) => {
+function verifyAsync(token, secretOrPublicKey) {
+  return new Promise(function executor(resolve, reject) {
+    jwt.verify(token, secretOrPublicKey, function (err, decoded) {
+      if (err) return reject(err);
+      return resolve(decoded);
+    });
+  });
+}
+
+async function authorized(req, res, next) {
+  if (!req.headers.authorization) res.sendStatus(401);
+  const [prefix, token] = req.headers.authorization.split(' ');
+  if (!(prefix === 'Bearer' && token)) res.sendStatus(401);
+  try {
+    await verifyAsync(token, publicKey);
+    next();
+  } catch (error) {
+    res.sendStatus(401);
+  }
+}
+
+app.get('/api/private', authorized, (req, res) => {
   res.json(true);
 });
 

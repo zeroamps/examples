@@ -3,9 +3,8 @@ const Joi = require('joi');
 const crypto = require('crypto');
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const passport = require('passport');
-const JwtStrategy = require('passport-jwt').Strategy;
-const ExtractJwt = require('passport-jwt').ExtractJwt;
+var { expressjwt } = require('express-jwt');
+var createGuard = require('express-jwt-permissions');
 
 const app = express();
 app.use(express.json());
@@ -30,23 +29,13 @@ function verifyPassword(password, hash, salt) {
 const publicKey = fs.readFileSync('./public.pem');
 const privateKey = fs.readFileSync('./private.pem');
 
-const options = { secretOrKey: publicKey, jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken() };
-passport.use(
-  new JwtStrategy(options, (payload, done) => {
-    const user = users.find((u) => u.username === payload.sub);
-    if (!user) return done(null, false);
-    return done(null, user);
-  })
-);
-
-app.use(passport.initialize());
-
 app.get('/api/public', (req, res) => {
-  res.json(true);
+  res.sendFile(200);
 });
 
-app.get('/api/private', passport.authenticate('jwt', { session: false }), (req, res) => {
-  res.json(true);
+const guard = createGuard({ requestProperty: 'auth', permissionsProperty: 'scope' });
+app.get('/api/private', expressjwt({ secret: publicKey, algorithms: ['RS256'] }), guard.check('admin'), (req, res) => {
+  res.json(req.auth);
 });
 
 const validateSchema = async (req, res, next) => {
@@ -69,7 +58,18 @@ app.post('/api/login', validateSchema, (req, res) => {
   const user = users.find((u) => u.username === req.body.username);
   if (!user) return res.sendStatus(401);
   if (!verifyPassword(req.body.password, user.hash, user.salt)) return res.sendStatus(401);
-  res.send({ token: jwt.sign({ sub: req.body.username }, privateKey, { algorithm: 'RS256', expiresIn: 60 }) });
+  res.send({
+    token: jwt.sign({ sub: req.body.username, scope: 'admin' }, privateKey, {
+      algorithm: 'RS256',
+      expiresIn: 60
+    })
+  });
+});
+
+// eslint-disable-next-line no-unused-vars
+app.use(function (err, req, res, next) {
+  if (err.name === 'UnauthorizedError') res.sendStatus(401);
+  res.sendStatus(500);
 });
 
 const port = process.env.PORT || 3000;
