@@ -1,0 +1,12 @@
+<div ngbDropdown class="d-inline-block">
+  <button type="button" class="btn btn-outline-primary" id="code" ngbDropdownToggle>
+    <span #dropdown>
+      <i class="fi fi-{{ countries[0].code }}"></i> {{ countries[0].name }} (+{{ countries[0].prefix }}
+    </span>
+  </button>
+  <div ngbDropdownMenu>
+    <button ngbDropdownItem *ngFor="let country of countries" (click)="select($event, country.prefix)">
+      <i class="fi fi-{{ country.code }}"></i> {{ country.name }} (+{{ country.prefix }})
+    </button>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+/* You can add global styles to this file, and also import other style files */
+@use '~bootstrap/scss/bootstrap';
+@use '~bootstrap-icons/font/bootstrap-icons';
+@use '~flag-icons/sass/flag-icons';
+
+html,
+body {
+  height: 100%;
+}

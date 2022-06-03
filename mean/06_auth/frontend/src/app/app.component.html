@@ -1,0 +1,48 @@
+<div class="d-flex flex-column h-100 text-center">
+  <div class="container-fluid mb-auto border-bottom">
+    <div class="container">
+      <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3">
+        <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+          <img src="/src/assets/icons/bootstrap.svg" alt="Bootstrap" width="32" height="32" />
+        </a>
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+          <li>
+            <a
+              routerLink=""
+              routerLinkActive="link-dark text-decoration-underline"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="nav-link px-2 link-secondary"
+              >Home</a
+            >
+          </li>
+          <li>
+            <a
+              routerLink="users"
+              routerLinkActive="link-dark text-decoration-underline"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="nav-link px-2 link-secondary"
+              >Users</a
+            >
+          </li>
+        </ul>
+        <div class="col-md-3 text-end">
+          <button routerLink="auth/login" type="button" *ngIf="!authorized" class="btn btn-outline-primary me-2">
+            Log in
+          </button>
+          <button routerLink="auth/signup" type="button" *ngIf="!authorized" class="btn btn-primary">Sign up</button>
+          <button type="button" *ngIf="authorized" class="btn btn-primary" (click)="logout()">Log out</button>
+        </div>
+      </header>
+    </div>
+  </div>
+
+  <main class="container">
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer class="mt-auto">
+    <p>
+      <a href="https://github.com/zeroamps/examples"><i class="bi-github"></i></a>
+    </p>
+  </footer>
+</div>

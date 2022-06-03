@@ -1,0 +1,11 @@
+<form class="col-xl-4 col-lg-5 col-md-6 mx-auto" #form="ngForm" (ngSubmit)="submit(form)">
+  <h1 class="display-6">Please log in</h1>
+  <div class="my-3">
+    <input type="email" class="form-control" id="username" name="username" placeholder="Username" ngModel required />
+  </div>
+  <div class="my-3">
+    <input type="password" class="form-control" id="password" name="password" placeholder="Password" ngModel required />
+  </div>
+  <div *ngIf="form.errors?.['invalid']" class="alert alert-danger p-1">Invalid credentials.</div>
+  <button type="submit" class="btn btn-primary">Log in</button>
+</form>
