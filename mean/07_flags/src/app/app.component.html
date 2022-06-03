@@ -1,7 +1,17 @@
 <div class="d-flex flex-column h-100 text-center">
   <main class="container mt-auto mb-auto">
     <h1 class="display-1 mb-5"><i class="bi-bootstrap"></i>Flags <span class="fi fi-gb"></span></h1>
-    <app-phone-prefixes-dropdown #dropdown></app-phone-prefixes-dropdown>
-    <input type="hidden" id="prefix" name="prefix" [value]="dropdown.prefix" />
+    <form [formGroup]="form">
+      <app-phone-prefixes-dropdown formControlName="prefix"></app-phone-prefixes-dropdown>
+    </form>
+    <p>{{ form.value.prefix }}</p>
+    <app-phone-prefixes-dropdown [formControl]="prefixControl"></app-phone-prefixes-dropdown>
+    <p>{{ prefixControl.value }}</p>
+    <form>
+      <app-phone-prefixes-dropdown
+        [(ngModel)]="prefix"
+        [ngModelOptions]="{ standalone: true }"></app-phone-prefixes-dropdown>
+    </form>
+    <p>{{ prefix }}</p>
   </main>
 </div>

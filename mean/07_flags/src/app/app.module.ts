@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -8,8 +9,7 @@ import { PhonePrefixesDropdownComponent } from './phone-prefixes-dropdown/phone-
 
 @NgModule({
   declarations: [AppComponent, PhonePrefixesDropdownComponent],
-  imports: [BrowserModule, AppRoutingModule, NgbModule],
-  providers: [],
+  imports: [BrowserModule, FormsModule, ReactiveFormsModule, AppRoutingModule, NgbModule],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
