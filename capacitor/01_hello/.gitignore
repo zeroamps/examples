@@ -1,0 +1,7 @@
+.idea/
+node_modules/
+android/
+.vscode/
+*.map
+.DS_Store
+.sourcemaps
