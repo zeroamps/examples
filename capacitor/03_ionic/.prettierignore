@@ -37,6 +37,7 @@ yarn-error.log
 testem.log
 /typings
 /android
+/www
 
 # System files
 .DS_Store
