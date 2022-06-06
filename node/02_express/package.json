@@ -19,7 +19,8 @@
     "start-passport-jwt": "nodemon ./07_passport_jwt/main.js",
     "start-jsonwebtoken": "nodemon ./08_jsonwebtoken/main.js",
     "start-express-jwt": "nodemon ./09_express-jwt/main.js",
-    "start-express-jwt-permissions": "nodemon ./10_express-jwt-permissions/main.js"
+    "start-express-jwt-permissions": "nodemon ./10_express-jwt-permissions/main.js",
+    "start-winston": "nodemon ./11_winston/main.js"
   },
   "devDependencies": {
     "eslint": "^8.16.0",
@@ -37,6 +38,7 @@
     "jsonwebtoken": "^8.5.1",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "winston": "^3.7.2"
   }
 }

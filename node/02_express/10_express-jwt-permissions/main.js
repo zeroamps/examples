@@ -66,8 +66,7 @@ app.post('/api/login', validateSchema, (req, res) => {
   });
 });
 
-// eslint-disable-next-line no-unused-vars
-app.use(function (err, req, res, next) {
+app.use(function (err, req, res, _next) {
   if (err.name === 'UnauthorizedError') res.sendStatus(401);
   res.sendStatus(500);
 });

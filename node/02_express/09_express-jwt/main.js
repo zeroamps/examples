@@ -59,8 +59,7 @@ app.post('/api/login', validateSchema, (req, res) => {
   res.send({ token: jwt.sign({ sub: req.body.username }, privateKey, { algorithm: 'RS256', expiresIn: 60 }) });
 });
 
-// eslint-disable-next-line no-unused-vars
-app.use(function (err, req, res, next) {
+app.use(function (err, req, res, _next) {
   if (err.name === 'UnauthorizedError') res.sendStatus(401);
   res.sendStatus(500);
 });
