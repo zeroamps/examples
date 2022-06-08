@@ -1,8 +1,12 @@
 <div class="d-flex flex-column h-100 text-center">
   <main class="container mt-auto mb-auto">
     <h1 class="display-1 mb-5"><i class="bi-activity" title="Activity"></i> ngx-translate</h1>
-    <p>{{ 'HELLO' | translate }}</p>
-    <button class="btn btn-primary me-1" (click)="translate('en')">EN</button>
-    <button class="btn btn-primary" (click)="translate('sk')">SK</button>
+    <p>
+      <span>{{ 'HELLO' | translate }}</span>
+      <br />
+      <span translate>HELLO</span>
+    </p>
+    <button class="btn btn-light me-1" (click)="translate('en')"><span class="display-5 fi fi-us"></span></button>
+    <button class="btn btn-light" (click)="translate('sk')"><span class="display-5 fi fi-sk"></span></button>
   </main>
 </div>
