@@ -20,7 +20,7 @@ const logger2 = winston.createLogger({
 });
 
 const logger3 = winston.createLogger({
-  transports: [new winston.transports.File({ filename: 'service.log' })]
+  transports: [new winston.transports.File({ filename: 'service.log', maxsize: 256 })]
 });
 
 app.get('/', (_req, _res) => {
