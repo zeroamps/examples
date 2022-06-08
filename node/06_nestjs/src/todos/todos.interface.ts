@@ -1,4 +1,4 @@
-export class TodosEntity {
+export class Todo {
   id: number;
   userId: number;
   title: string;

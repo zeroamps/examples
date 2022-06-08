@@ -1,5 +1,8 @@
 <div class="d-flex flex-column h-100 text-center">
   <main class="container mt-auto mb-auto">
-    <h1 class="display-1 mb-5"><i class="bi-activity"></i>Internationalization</h1>
+    <h1 class="display-1 mb-5"><i class="bi-activity" title="Activity" i18n-title></i>{{ title }}</h1>
+    <p i18n>I output an element.</p>
+    <ng-container i18n>I don't output any element.</ng-container>
+    <!-- <p i18n>This is a missing translation.</p> -->
   </main>
 </div>

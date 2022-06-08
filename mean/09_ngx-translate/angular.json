@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "internationalization": {
+    "ngx-translate": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -16,25 +16,11 @@
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
-      "i18n": {
-        "sourceLocale": {
-          "code": "en",
-          "baseHref": ""
-        },
-        "locales": {
-          "sk": {
-            "translation": "src/locales/messages.sk.xlf",
-            "baseHref": ""
-          }
-        }
-      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/internationalization",
-            "localize": true,
-            "i18nMissingTranslation": "error",
+            "outputPath": "dist/ngx-translate",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -73,12 +59,6 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
-            },
-            "en": {
-              "localize": ["en"]
-            },
-            "sk": {
-              "localize": ["sk"]
             }
           },
           "defaultConfiguration": "production"
@@ -87,16 +67,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "internationalization:build:production"
+              "browserTarget": "ngx-translate:build:production"
             },
             "development": {
-              "browserTarget": "internationalization:build:development"
-            },
-            "en": {
-              "browserTarget": "internationalization:build:development,en"
-            },
-            "sk": {
-              "browserTarget": "internationalization:build:development,sk"
+              "browserTarget": "ngx-translate:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -104,7 +78,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "internationalization:build"
+            "browserTarget": "ngx-translate:build"
           }
         },
         "test": {
@@ -129,7 +103,7 @@
       }
     }
   },
-  "defaultProject": "internationalization",
+  "defaultProject": "ngx-translate",
   "cli": {
     "defaultCollection": "@angular-eslint/schematics"
   }
