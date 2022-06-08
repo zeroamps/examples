@@ -20,6 +20,7 @@ const logger2 = winston.createLogger({
 });
 
 const logger3 = winston.createLogger({
+  format: winston.format.combine(winston.format.timestamp(), winston.format.prettyPrint()),
   transports: [new winston.transports.File({ filename: 'service.log', maxsize: 256 })]
 });
 
