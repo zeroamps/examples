@@ -1,0 +1,15 @@
+<div class="d-flex flex-column h-100 text-center">
+  <main class="container mt-auto mb-auto">
+    <h1 class="display-1 mb-5"><i class="bi-activity"></i> Routing</h1>
+    <router-outlet></router-outlet>
+    <button
+      type="button"
+      class="btn btn-lg me-2"
+      routerLink=""
+      routerLinkActive="btn-primary"
+      [routerLinkActiveOptions]="{ exact: true }">
+      Home
+    </button>
+    <button type="button" class="btn btn-lg" routerLink="about" routerLinkActive="btn-primary">About</button>
+  </main>
+</div>
