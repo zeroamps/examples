@@ -1,0 +1,9 @@
+/* You can add global styles to this file, and also import other style files */
+
+/*rtl:begin:ignore*/
+@import 'themes/hello.scss';
+/*rtl:end:ignore*/
+
+.rtl {
+  @import 'themes/hello.scss';
+}
