@@ -11,9 +11,10 @@ import { Example06Component } from './example06/example06.component';
 import { Example07Component } from './example07/example07.component';
 
 const routes: Routes = [
-  { path: '', component: TemplateDrivenFormsComponent, redirectTo: '01', pathMatch: 'full' },
+  { path: '', redirectTo: 'template-driven-forms/01', pathMatch: 'full' },
+  { path: 'template-driven-forms', redirectTo: 'template-driven-forms/01', pathMatch: 'full' },
   {
-    path: '',
+    path: 'template-driven-forms',
     component: TemplateDrivenFormsComponent,
     children: [
       { path: '01', component: Example01Component },
