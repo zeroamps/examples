@@ -1,4 +1,4 @@
-import { generateSalt } from '../auth/auth.util';
+import { generateSalt, hashPassword } from '../auth/auth.util';
 import { User } from './user.model';
 
 const all: User[] = [
@@ -29,9 +29,8 @@ function find(username: string) {
 function create(username: string, password: string) {
   const id = all.length > 0 ? all[all.length - 1].id + 1 : 1;
   const salt = generateSalt();
-
-  const user: User = { id: id, username };
-
+  const hash = hashPassword(password, salt);
+  const user: User = { id: id, username, hash, salt };
   all.push(user);
   return user;
 }

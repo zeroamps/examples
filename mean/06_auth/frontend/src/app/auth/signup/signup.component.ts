@@ -1,12 +1,24 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
+import { AuthService } from '../auth.service';
+
 @Component({
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss']
 })
 export class SignupComponent {
+  constructor(private auth: AuthService) {}
+
   submit(ngForm: NgForm): void {
-    ngForm.form.markAllAsTouched();
+    if (!ngForm.valid) return ngForm.form.markAllAsTouched();
+    this.auth.signup(ngForm.value.username, ngForm.value.password).subscribe({
+      complete: () => {
+        this.auth.navigateToHome();
+      },
+      error: () => {
+        ngForm.form.setErrors({ invalid: true });
+      }
+    });
   }
 }

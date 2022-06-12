@@ -29,6 +29,18 @@ export class AuthService {
     );
   }
 
+  signup(username: string, password: string): Observable<boolean> {
+    return this.http.post<string>('/api/auth/signup', { username, password }).pipe(
+      switchMap((token) => {
+        this.token = token;
+        this.authorized = true;
+        this.authorizedSubject.next(this.authorized);
+        return of(true);
+      }),
+      catchError((error) => throwError(() => false))
+    );
+  }
+
   logout(): void {
     this.token = undefined;
     this.authorized = false;
