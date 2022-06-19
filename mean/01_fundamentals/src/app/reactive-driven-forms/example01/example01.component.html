@@ -1,1 +1,15 @@
-<p>example01 works!</p>
+<div class="row">
+  <div class="col-6">
+    <div class="alert alert-info">A very simple reactive form control.</div>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input id="email" name="email" type="email" class="form-control" [formControl]="email" />
+    </div>
+    <div class="d-grid gap-1 d-md-flex justify-content-md-center mb-1">
+      <button type="submit" class="btn btn-primary" (click)="submit()">Submit</button>
+    </div>
+  </div>
+  <div class="col-6">
+    <app-form-info [control]="email"></app-form-info>
+  </div>
+</div>

@@ -1,4 +1,25 @@
 <div class="container">
   <h1 class="display-1">Hello!</h1>
-  <button class="btn btn-primary ms-5" (click)="ltrrtl()">LTR - RTL</button>
+  <div class="mb-3">
+    <button class="btn btn-primary ms-5" (click)="ltrrtl()">LTR - RTL</button>
+  </div>
+  <button class="btn btn-primary ms-5" (click)="open(content)">Launch demo modal</button>
 </div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Dismiss')"></button>
+  </div>
+  <div class="modal-body">
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="radio" id="radio" />
+      <label class="form-check-label" for="radio">Default radio</label>
+    </div>
+    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magnam temporibus maxime quidem autem unde asperiores odio
+    velit eaque veritatis sapiente vitae sed explicabo, id assumenda libero eveniet omnis minus corporis!
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Close')">Save</button>
+  </div>
+</ng-template>

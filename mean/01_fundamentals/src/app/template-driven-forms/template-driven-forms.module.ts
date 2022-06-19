@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { SharedModule } from '../shared/shared.module';
 import { TemplateDrivenFormsRoutingModule } from './template-driven-forms-routing.module';
+import { FormInfoComponent } from './form-info/form-info.component';
 import { TemplateDrivenFormsComponent } from './template-driven-forms/template-driven-forms.component';
 import { Example01Component } from './example01/example01.component';
 import { Example02Component } from './example02/example02.component';
@@ -15,6 +15,7 @@ import { CustomValidatorDirective, Example07Component } from './example07/exampl
 
 @NgModule({
   declarations: [
+    FormInfoComponent,
     TemplateDrivenFormsComponent,
     Example01Component,
     Example02Component,
@@ -26,6 +27,6 @@ import { CustomValidatorDirective, Example07Component } from './example07/exampl
     Example07Component,
     CustomValidatorDirective
   ],
-  imports: [CommonModule, FormsModule, TemplateDrivenFormsRoutingModule, SharedModule]
+  imports: [CommonModule, FormsModule, TemplateDrivenFormsRoutingModule]
 })
 export class TemplateDrivenFormsModule {}

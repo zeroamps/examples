@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { ReactiveDrivenFormsRoutingModule } from './reactive-driven-forms-routing.module';
+import { FormInfoComponent } from './form-info/form-info.component';
 import { ReactiveDrivenFormsComponent } from './reactive-driven-forms/reactive-driven-forms.component';
 import { Example01Component } from './example01/example01.component';
 import { Example02Component } from './example02/example02.component';
@@ -13,6 +15,7 @@ import { Example07Component } from './example07/example07.component';
 
 @NgModule({
   declarations: [
+    FormInfoComponent,
     ReactiveDrivenFormsComponent,
     Example01Component,
     Example02Component,
@@ -22,6 +25,6 @@ import { Example07Component } from './example07/example07.component';
     Example06Component,
     Example07Component
   ],
-  imports: [CommonModule, ReactiveDrivenFormsRoutingModule]
+  imports: [CommonModule, ReactiveFormsModule, ReactiveDrivenFormsRoutingModule]
 })
 export class ReactiveDrivenFormsModule {}
