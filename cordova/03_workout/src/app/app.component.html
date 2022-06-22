@@ -1,5 +1,15 @@
 <div class="d-flex flex-column h-100 text-center">
+  <nav class="navbar navbar-dark bg-primary">
+    <a class="navbar-brand mx-auto" href="/"><i class="bi bi-activity"></i> Workout</a>
+  </nav>
   <main class="container mt-auto mb-auto">
-    <h1 class="display-1"><i class="bi-activity"></i> Workout</h1>
+    <h1 class="display-1 mb-0">00.00</h1>
+    <p>KM</p>
+    <h2 class="fs-6 mb-0">{{ duration }}</h2>
+    <p><i class="bi bi-clock"></i></p>
   </main>
+  <nav class="navbar navbar-light bg-light">
+    <button *ngIf="!running" type="button" class="btn btn-lg btn-success w-75 mx-auto" (click)="start()">Start</button>
+    <button *ngIf="running" type="button" class="btn btn-lg btn-success w-75 mx-auto" (click)="finish()">Finish</button>
+  </nav>
 </div>
