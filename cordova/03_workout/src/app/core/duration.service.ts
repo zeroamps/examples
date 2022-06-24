@@ -8,10 +8,9 @@ import * as moment from 'moment';
 export class DurationService {
   private _started = moment();
   private _duration: moment.Duration;
-  private _running = false;
   private _interval: any;
 
-  durationChange = new EventEmitter<string>();
+  onChange = new EventEmitter<string>();
 
   constructor(private decimalPipe: DecimalPipe) {
     this._duration = moment.duration(this._started.diff(this._started));
@@ -24,21 +23,15 @@ export class DurationService {
     return `${hours}:${minutes}:${seconds}`;
   }
 
-  get running(): boolean {
-    return this._running;
-  }
-
   start() {
-    this._running = true;
     this._started = moment();
     this._interval = setInterval(() => {
       this._duration = moment.duration(moment().diff(this._started));
-      this.durationChange.emit(this.duration);
+      this.onChange.emit(this.duration);
     }, 1000);
   }
 
-  finish() {
-    this._running = false;
+  stop() {
     clearInterval(this._interval);
   }
 }
