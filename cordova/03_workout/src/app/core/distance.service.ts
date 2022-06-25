@@ -13,7 +13,6 @@ export class DistanceService {
   private _longitude?: number;
 
   onChange = new EventEmitter<string>();
-  onLogger = new EventEmitter<string>();
 
   constructor(private decimalPipe: DecimalPipe) {
     if (!this.ready()) return;
@@ -28,33 +27,11 @@ export class DistanceService {
       fastestInterval: 5000
     });
 
-    BackgroundGeolocation.on('start', () => {
-      this.onLogger.emit('started');
-    });
-
-    BackgroundGeolocation.on('stop', () => {
-      this.onLogger.emit('stopped');
-    });
-
-    BackgroundGeolocation.on('background', () => {
-      this.onLogger.emit('background');
-    });
-
-    BackgroundGeolocation.on('foreground', () => {
-      this.onLogger.emit('foreground');
-    });
-
     BackgroundGeolocation.on('error', (error) => {
-      this.onLogger.emit(`error: ${error.code}, ${error.message}`);
-    });
-
-    BackgroundGeolocation.on('stationary', (location) => {
-      this.onLogger.emit('stationary');
-      this.onLogger.emit(JSON.stringify(location));
+      console.log(`error: ${error.code}, ${error.message}`);
     });
 
     BackgroundGeolocation.on('location', (location) => {
-      this.onLogger.emit('location');
       if (this._latitude && this._longitude) {
         this._distance += this.calculateDistance(
           this._latitude,
@@ -82,7 +59,7 @@ export class DistanceService {
   }
 
   distance() {
-    return `${this.decimalPipe.transform(this._distance / 1000, '2.2')}`;
+    return `${this.decimalPipe.transform(this._distance / 1000, '2.3')}`;
   }
 
   private ready() {

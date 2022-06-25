@@ -8,7 +8,6 @@ import { DurationService } from './core/duration.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  logs: string[] = [];
   duration: string;
   distance: string;
   running: boolean;
@@ -17,7 +16,6 @@ export class AppComponent {
     this.durationService.onChange.subscribe((duration) => (this.duration = duration));
     this.duration = this.durationService.duration;
     this.distanceService.onChange.subscribe((distance) => (this.distance = distance));
-    this.distanceService.onLogger.subscribe((message) => this.logs.push(message));
     this.distance = this.distanceService.distance();
   }
 

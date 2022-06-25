@@ -7,7 +7,6 @@
     <p>KM</p>
     <h2 class="fs-6 mb-0">{{ duration }}</h2>
     <p><i class="bi bi-clock"></i></p>
-    <textarea class="form-control" rows="15" [value]="logs | json"></textarea>
   </main>
   <nav class="navbar navbar-light bg-light">
     <button *ngIf="!running" type="button" class="btn btn-lg btn-success w-75 mx-auto" (click)="start()">Start</button>
