@@ -1,81 +1,93 @@
 import { DecimalPipe } from '@angular/common';
 import { EventEmitter, Injectable } from '@angular/core';
-import * as moment from 'moment';
+
+import { BackgroundGeolocationPlugin } from '@mauron85/cordova-plugin-background-geolocation';
+declare const BackgroundGeolocation: BackgroundGeolocationPlugin;
 
 @Injectable({
   providedIn: 'root'
 })
 export class DistanceService {
   private _distance = 0;
-  private _latitude: number;
-  private _longitude: number;
-  private _prevLatitude: number;
-  private _prevLongitude: number;
-  private _prevMeasured: moment.Moment;
-  private _watch: number;
+  private _latitude?: number;
+  private _longitude?: number;
 
   onChange = new EventEmitter<string>();
   onLogger = new EventEmitter<string>();
 
   constructor(private decimalPipe: DecimalPipe) {
-    navigator.geolocation.getCurrentPosition(() => {});
-  }
+    if (!this.ready()) return;
 
-  get distance(): string {
-    return `${this.decimalPipe.transform(this._distance / 1000, '2.3')}`;
+    BackgroundGeolocation.configure({
+      locationProvider: BackgroundGeolocation.DISTANCE_FILTER_PROVIDER,
+      desiredAccuracy: BackgroundGeolocation.HIGH_ACCURACY,
+      stationaryRadius: 25,
+      distanceFilter: 10,
+      debug: true,
+      interval: 10000,
+      fastestInterval: 5000
+    });
+
+    BackgroundGeolocation.on('start', () => {
+      this.onLogger.emit('started');
+    });
+
+    BackgroundGeolocation.on('stop', () => {
+      this.onLogger.emit('stopped');
+    });
+
+    BackgroundGeolocation.on('background', () => {
+      this.onLogger.emit('background');
+    });
+
+    BackgroundGeolocation.on('foreground', () => {
+      this.onLogger.emit('foreground');
+    });
+
+    BackgroundGeolocation.on('error', (error) => {
+      this.onLogger.emit(`error: ${error.code}, ${error.message}`);
+    });
+
+    BackgroundGeolocation.on('stationary', (location) => {
+      this.onLogger.emit('stationary');
+      this.onLogger.emit(JSON.stringify(location));
+    });
+
+    BackgroundGeolocation.on('location', (location) => {
+      this.onLogger.emit('location');
+      if (this._latitude && this._longitude) {
+        this._distance += this.calculateDistance(
+          this._latitude,
+          this._longitude,
+          location.latitude,
+          location.longitude
+        );
+        this.onChange.emit(this.distance());
+      }
+      this._latitude = location.latitude;
+      this._longitude = location.longitude;
+    });
   }
 
   start() {
-    this._distance = 0;
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        this._latitude = position.coords.latitude;
-        this._longitude = position.coords.longitude;
-        this._prevLatitude = this._latitude;
-        this._prevLongitude - this._longitude;
-        this._prevMeasured = moment();
-
-        this._watch = navigator.geolocation.watchPosition(
-          (position) => {
-            const updatedLatitude = position.coords.latitude;
-            const updatedLongitude = position.coords.longitude;
-            const distance = this.calculateDistance(this._latitude, this._longitude, updatedLatitude, updatedLongitude);
-            const prevDistance = this.calculateDistance(
-              this._prevLatitude,
-              this._prevLongitude,
-              updatedLatitude,
-              updatedLongitude
-            );
-
-            const duration = moment.duration(moment().diff(this._prevMeasured));
-            const speed = prevDistance / duration.asSeconds();
-            this._prevLatitude = updatedLatitude;
-            this._prevLongitude = updatedLongitude;
-            this._prevMeasured = moment();
-            this.onLogger.emit(`${distance}, ${duration.asSeconds()}, ${speed}`);
-
-            if (distance > 1.5 && speed < 5) {
-              this._distance += distance;
-              this._latitude = updatedLatitude;
-              this._longitude = updatedLongitude;
-              this.onChange.emit(this.distance);
-            }
-          },
-          this.error,
-          { enableHighAccuracy: true }
-        );
-      },
-      this.error,
-      { enableHighAccuracy: true }
-    );
+    if (!this.ready()) return;
+    this._latitude = undefined;
+    this._longitude = undefined;
+    BackgroundGeolocation.start();
   }
 
   stop() {
-    navigator.geolocation.clearWatch(this._watch);
+    if (!this.ready()) return;
+    BackgroundGeolocation.stop();
   }
 
-  private error(error: any) {
-    this.onLogger.emit(`code: ${error.code}, message: ${error.message}`);
+  distance() {
+    return `${this.decimalPipe.transform(this._distance / 1000, '2.2')}`;
+  }
+
+  private ready() {
+    if (typeof BackgroundGeolocation === 'undefined') return false;
+    return true;
   }
 
   private calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number) {

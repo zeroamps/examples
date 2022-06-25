@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import * as moment from 'moment';
 import { DistanceService } from './core/distance.service';
 import { DurationService } from './core/duration.service';
 
@@ -19,7 +18,7 @@ export class AppComponent {
     this.duration = this.durationService.duration;
     this.distanceService.onChange.subscribe((distance) => (this.distance = distance));
     this.distanceService.onLogger.subscribe((message) => this.logs.push(message));
-    this.distance = this.distanceService.distance;
+    this.distance = this.distanceService.distance();
   }
 
   start() {
