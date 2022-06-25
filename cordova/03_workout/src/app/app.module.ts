@@ -4,11 +4,12 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CoreModule } from './core/core.module';
+import { HistoryModule } from './history/history.module';
+import { WorkoutModule } from './workout/workout.module';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, NgbModule, CoreModule],
+  imports: [BrowserModule, AppRoutingModule, NgbModule, WorkoutModule, HistoryModule],
   providers: [],
   bootstrap: [AppComponent]
 })

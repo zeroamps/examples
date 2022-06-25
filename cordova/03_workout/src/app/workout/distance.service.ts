@@ -1,18 +1,18 @@
 import { DecimalPipe } from '@angular/common';
 import { EventEmitter, Injectable } from '@angular/core';
 
-import { BackgroundGeolocationPlugin } from '@mauron85/cordova-plugin-background-geolocation';
+import { BackgroundGeolocationPlugin } from 'cordova-background-geolocation-plugin';
 declare const BackgroundGeolocation: BackgroundGeolocationPlugin;
 
 @Injectable({
   providedIn: 'root'
 })
 export class DistanceService {
-  private _distance = 0;
   private _latitude?: number;
   private _longitude?: number;
+  distance = 0;
 
-  onChange = new EventEmitter<string>();
+  onChange = new EventEmitter<number>();
 
   constructor(private decimalPipe: DecimalPipe) {
     if (!this.ready()) return;
@@ -33,13 +33,8 @@ export class DistanceService {
 
     BackgroundGeolocation.on('location', (location) => {
       if (this._latitude && this._longitude) {
-        this._distance += this.calculateDistance(
-          this._latitude,
-          this._longitude,
-          location.latitude,
-          location.longitude
-        );
-        this.onChange.emit(this.distance());
+        this.distance += this.calculateDistance(this._latitude, this._longitude, location.latitude, location.longitude);
+        this.onChange.emit(this.distance);
       }
       this._latitude = location.latitude;
       this._longitude = location.longitude;
@@ -48,6 +43,7 @@ export class DistanceService {
 
   start() {
     if (!this.ready()) return;
+    this.distance = 0;
     this._latitude = undefined;
     this._longitude = undefined;
     BackgroundGeolocation.start();
@@ -58,8 +54,8 @@ export class DistanceService {
     BackgroundGeolocation.stop();
   }
 
-  distance() {
-    return `${this.decimalPipe.transform(this._distance / 1000, '2.3')}`;
+  format(distance: number) {
+    return `${this.decimalPipe.transform(distance / 1000, '2.3')}`;
   }
 
   private ready() {

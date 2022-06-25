@@ -1,15 +1,22 @@
-<div class="d-flex flex-column h-100 text-center">
-  <nav class="navbar navbar-dark bg-primary">
-    <a class="navbar-brand mx-auto" href="/"><i class="bi bi-activity"></i> Workout</a>
-  </nav>
-  <main class="container mt-auto mb-auto">
-    <h1 class="display-1 mb-0">{{ distance }}</h1>
-    <p>KM</p>
-    <h2 class="fs-6 mb-0">{{ duration }}</h2>
-    <p><i class="bi bi-clock"></i></p>
-  </main>
-  <nav class="navbar navbar-light bg-light">
-    <button *ngIf="!running" type="button" class="btn btn-lg btn-success w-75 mx-auto" (click)="start()">Start</button>
-    <button *ngIf="running" type="button" class="btn btn-lg btn-success w-75 mx-auto" (click)="finish()">Finish</button>
-  </nav>
-</div>
+<nav class="navbar fixed-top navbar-dark bg-primary">
+  <a class="navbar-brand mx-auto" href="/"><i class="bi bi-activity"></i> Workout</a>
+</nav>
+<router-outlet></router-outlet>
+<nav class="navbar fixed-bottom navbar-light bg-light justify-content-center">
+  <ul class="nav nav-fill w-75">
+    <li class="nav-item text-center">
+      <a
+        class="nav-link text-secondary"
+        routerLink=""
+        routerLinkActive="text-danger"
+        [routerLinkActiveOptions]="{ exact: true }">
+        <i class="bi bi-speedometer fs-1"></i>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-secondary" routerLink="history" routerLinkActive="text-danger">
+        <i class="bi bi-list-check fs-1"></i>
+      </a>
+    </li>
+  </ul>
+</nav>

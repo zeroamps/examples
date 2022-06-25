@@ -1,0 +1,10 @@
+<div class="d-flex flex-column h-100 text-center">
+  <div class="container mt-auto mb-auto">
+    <h1 class="display-1 mb-0">{{ distance }}</h1>
+    <p>KM</p>
+    <h2 class="fs-6 mb-0">{{ duration }}</h2>
+    <p><i class="bi bi-clock"></i></p>
+    <button *ngIf="!running" type="button" class="btn btn-lg btn-success w-75 mx-auto" (click)="start()">Start</button>
+    <button *ngIf="running" type="button" class="btn btn-lg btn-success w-75 mx-auto" (click)="finish()">Finish</button>
+  </div>
+</div>
