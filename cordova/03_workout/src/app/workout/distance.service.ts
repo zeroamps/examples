@@ -44,6 +44,7 @@ export class DistanceService {
   start() {
     if (!this.ready()) return;
     this.distance = 0;
+    this.onChange.emit(this.distance);
     this._latitude = undefined;
     this._longitude = undefined;
     BackgroundGeolocation.start();

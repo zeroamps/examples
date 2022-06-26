@@ -18,6 +18,8 @@ export class DurationService {
 
   start() {
     this._started = moment();
+    this.duration = moment.duration(0, 'milliseconds');
+    this.onChange.emit(this.duration);
     this._interval = setInterval(() => {
       this.duration = moment.duration(moment().diff(this._started));
       this.onChange.emit(this.duration);

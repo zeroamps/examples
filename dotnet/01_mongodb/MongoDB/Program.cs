@@ -11,7 +11,38 @@ namespace MongoDB
             var client = new MongoClient("mongodb://localhost:27017");
             var database = client.GetDatabase("test");
 
-            await Example04(database);
+            await Example05(database);
+        }
+
+        class Car
+        {
+            public ObjectId Id { get; set; }
+            public string Name { get; set; }
+            public string[] Users { get; set; }
+        }
+
+        async static Task Example05(IMongoDatabase database)
+        {
+            var collection = database.GetCollection<Car>("cars");
+
+            var documents = new[] {
+                new Car {
+                    Name = "User A",
+                    Users = new [] { "A", "B", "C" }
+                },
+                new Car  {
+                    Name = "User B",
+                    Users = new [] { "A", "B", "C" }
+                }
+            };
+
+            //await collection.InsertManyAsync(documents);
+
+            //var updateDefinition = Builders<Car>.Update.Set(f => f.Users, new[] { "X", "Y", "Z" });
+            //var updateDefinition = Builders<Car>.Update.AddToSetEach(f => f.Users, new[] { "A", "B" });
+            //var updateDefinition = Builders<Car>.Update.Push(f => f.Users, "E");
+            var updateDefinition = Builders<Car>.Update.PushEach(f => f.Users, new[] { "K", "L" });
+            await collection.UpdateOneAsync(c => c.Id == new ObjectId("62b847a32a699d4468a959a4"), updateDefinition);
         }
 
         class User
