@@ -5,7 +5,7 @@ import { Workout } from '../shared/workout.domain';
 import { WorkoutModel } from '../shared/workout.model';
 import { DistanceService } from './distance.service';
 import { DurationService } from './duration.service';
-import { WorkoutChangeEvent } from './WorkoutChangeEvent';
+import { WorkoutChangeEvent } from './workout-change-event';
 
 @Injectable({
   providedIn: 'root'
