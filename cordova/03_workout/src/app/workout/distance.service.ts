@@ -1,6 +1,7 @@
 import { DecimalPipe } from '@angular/common';
 import { EventEmitter, Injectable } from '@angular/core';
 
+import { LoggingService } from '../logging/logging.service';
 import { BackgroundGeolocationPlugin } from 'cordova-background-geolocation-plugin';
 declare const BackgroundGeolocation: BackgroundGeolocationPlugin;
 
@@ -14,7 +15,7 @@ export class DistanceService {
 
   onChange = new EventEmitter<number>();
 
-  constructor(private decimalPipe: DecimalPipe) {
+  constructor(private decimalPipe: DecimalPipe, private loggingService: LoggingService) {
     if (!this.ready()) return;
 
     BackgroundGeolocation.configure({
@@ -28,16 +29,18 @@ export class DistanceService {
     });
 
     BackgroundGeolocation.on('error', (error) => {
-      console.log(`error: ${error.code}, ${error.message}`);
+      this.loggingService.insert(`error: ${error.code}, ${error.message}`);
     });
 
     BackgroundGeolocation.on('location', (location) => {
       if (this._latitude && this._longitude) {
         this.distance += this.calculateDistance(this._latitude, this._longitude, location.latitude, location.longitude);
         this.onChange.emit(this.distance);
+        this.loggingService.insert(`${this.distance}`);
       }
       this._latitude = location.latitude;
       this._longitude = location.longitude;
+      this.loggingService.insert(`${this._latitude}, ${this._longitude}`);
     });
   }
 

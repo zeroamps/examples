@@ -14,7 +14,7 @@ export class WorkoutService {
   running: boolean;
   duration: string;
   distance: string;
-  private started: number;
+  private _started: number;
   private _workouts: Workout[] = [];
   onChange = new EventEmitter<WorkoutChangeEvent>();
 
@@ -36,7 +36,7 @@ export class WorkoutService {
   }
 
   start() {
-    this.started = Date.now();
+    this._started = Date.now();
     this.durationService.start();
     this.distanceService.start();
     this.running = true;
@@ -46,7 +46,7 @@ export class WorkoutService {
   stop() {
     this.durationService.stop();
     this.distanceService.stop();
-    this.create(this.started, this.durationService.duration.asMilliseconds(), this.distanceService.distance);
+    this.insert(this._started, this.durationService.duration.asMilliseconds(), this.distanceService.distance);
     this.running = false;
     this.onChange.emit({ running: this.running, duration: this.duration, distance: this.distance });
   }
@@ -64,7 +64,7 @@ export class WorkoutService {
       );
   }
 
-  create(started: number, duration: number, distance: number) {
+  insert(started: number, duration: number, distance: number) {
     this._workouts.push({ started, duration, distance });
     localStorage.setItem('workouts', JSON.stringify(this._workouts));
   }
