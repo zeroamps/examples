@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { WorkoutService } from './workout.service';
-import { DistanceService } from './distance.service';
-import { DurationService } from './duration.service';
 
 @Component({
   templateUrl: './workout.component.html'
@@ -10,34 +8,23 @@ export class WorkoutComponent {
   duration: string;
   distance: string;
   running: boolean;
-  private started: number;
 
-  constructor(
-    private durationService: DurationService,
-    private distanceService: DistanceService,
-    private workoutService: WorkoutService
-  ) {
-    this.durationService.onChange.subscribe((duration) => (this.duration = this.durationService.format(duration)));
-    this.duration = this.durationService.format(this.durationService.duration);
-    this.distanceService.onChange.subscribe((distance) => (this.distance = this.distanceService.format(distance)));
-    this.distance = this.distanceService.format(this.distanceService.distance);
+  constructor(private workoutService: WorkoutService) {
+    this.running = this.workoutService.running;
+    this.duration = this.workoutService.duration;
+    this.distance = this.workoutService.distance;
+    this.workoutService.onChange.subscribe((event) => {
+      this.running = event.running;
+      this.duration = event.duration;
+      this.distance = event.distance;
+    });
   }
 
   start() {
-    this.started = Date.now();
-    this.durationService.start();
-    this.distanceService.start();
-    this.running = true;
+    this.workoutService.start();
   }
 
   finish() {
-    this.durationService.stop();
-    this.distanceService.stop();
-    this.workoutService.create(
-      this.started,
-      this.durationService.duration.asMilliseconds(),
-      this.distanceService.distance
-    );
-    this.running = false;
+    this.workoutService.stop();
   }
 }

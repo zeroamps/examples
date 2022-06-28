@@ -56,7 +56,7 @@ export class DistanceService {
   }
 
   format(distance: number) {
-    return `${this.decimalPipe.transform(distance / 1000, '2.3')}`;
+    return `${this.decimalPipe.transform(distance / 1000, '0.2-2')}`;
   }
 
   private ready() {
