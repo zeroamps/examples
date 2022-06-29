@@ -1,5 +1,6 @@
 import { DecimalPipe } from '@angular/common';
 import { EventEmitter, Injectable } from '@angular/core';
+import { timer } from 'rxjs';
 
 import { LoggingService } from '../logging/logging.service';
 import { BackgroundGeolocationPlugin } from 'cordova-background-geolocation-plugin';
@@ -32,6 +33,26 @@ export class DistanceService {
       this.loggingService.insert(`error: ${error.code}, ${error.message}`);
     });
 
+    BackgroundGeolocation.on('start', () => {
+      this.loggingService.insert('BackgroundGeolocation service has been started.');
+    });
+
+    BackgroundGeolocation.on('stop', () => {
+      this.loggingService.insert('BackgroundGeolocation service has been stopped.');
+    });
+
+    BackgroundGeolocation.on('background', () => {
+      this.loggingService.insert('BackgroundGeolocation service is in background.');
+    });
+
+    BackgroundGeolocation.on('foreground', () => {
+      this.loggingService.insert('BackgroundGeolocation service is in foreground.');
+    });
+
+    BackgroundGeolocation.on('stationary', (stationaryLocation) => {
+      this.loggingService.insert('BackgroundGeolocation service is in stationary.');
+    });
+
     BackgroundGeolocation.on('location', (location) => {
       if (this._latitude && this._longitude) {
         this.distance += this.calculateDistance(this._latitude, this._longitude, location.latitude, location.longitude);
@@ -42,6 +63,8 @@ export class DistanceService {
       this._longitude = location.longitude;
       this.loggingService.insert(`${this._latitude}, ${this._longitude}`);
     });
+
+    timer(0, 30000).subscribe(() => this.check());
   }
 
   start() {
@@ -56,6 +79,13 @@ export class DistanceService {
   stop() {
     if (!this.ready()) return;
     BackgroundGeolocation.stop();
+  }
+
+  check() {
+    BackgroundGeolocation.checkStatus((status) => {
+      this.loggingService.insert(`BackgroundGeolocation service is running: ${status.isRunning}.`);
+      this.loggingService.insert(`BackgroundGeolocation service is enabled: ${status.locationServicesEnabled}.`);
+    });
   }
 
   format(distance: number) {
