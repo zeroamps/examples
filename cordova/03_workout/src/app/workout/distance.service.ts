@@ -85,6 +85,10 @@ export class DistanceService {
     BackgroundGeolocation.checkStatus((status) => {
       this.loggingService.insert(`BackgroundGeolocation service is running: ${status.isRunning}.`);
       this.loggingService.insert(`BackgroundGeolocation service is enabled: ${status.locationServicesEnabled}.`);
+
+      BackgroundGeolocation.getValidLocations((locations) => {
+        this.loggingService.insert(`BackgroundGeolocation service valid locations: ${locations.length}.`);
+      });
     });
   }
 
