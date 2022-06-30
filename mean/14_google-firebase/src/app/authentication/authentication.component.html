@@ -1,0 +1,17 @@
+<app-center-layout>
+  <div class="card">
+    <h1 class="card-header display-1">Authentication</h1>
+    <div class="card-body">
+      <div class="d-grid gap-1 mx-auto">
+        <button class="btn btn-lg btn-primary" type="button" (click)="loginWithEmailAndPassword()">
+          Log in with loginEmailAndPassword
+        </button>
+        <button class="btn btn-lg btn-primary" type="button" (click)="loginWithPhoneNumber()">
+          Log in with loginWithPhoneNumber
+        </button>
+        <button class="btn btn-lg btn-primary" type="button" (click)="logout()">Log out</button>
+      </div>
+    </div>
+  </div>
+  <div id="recaptcha"></div>
+</app-center-layout>
