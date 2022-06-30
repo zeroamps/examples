@@ -1,3 +1,23 @@
 <app-center-layout>
-  <p>firestore works!</p>
+  <div class="card">
+    <h1 class="card-header display-1">Firestore</h1>
+    <div class="card-body">
+      <div class="d-grid gap-1 mx-auto">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>First</th>
+              <th>Last</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let student of students | async">
+              <td>{{ student.firstName }}</td>
+              <td>{{ student.lastName }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </app-center-layout>
