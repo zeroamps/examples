@@ -1,4 +1,4 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
 
@@ -6,13 +6,9 @@ import firebase from 'firebase/compat/app';
   selector: 'app-authentication',
   templateUrl: './authentication.component.html'
 })
-export class AuthenticationComponent implements AfterViewInit {
+export class AuthenticationComponent {
   private recaptchaVerifier: any;
   constructor(public auth: AngularFireAuth) {}
-
-  ngAfterViewInit(): void {
-    this.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha', { size: 'invisible' });
-  }
 
   loginWithEmailAndPassword() {
     this.auth
@@ -31,6 +27,10 @@ export class AuthenticationComponent implements AfterViewInit {
   }
 
   loginWithPhoneNumber() {
+    if (!this.recaptchaVerifier) {
+      this.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha', { size: 'invisible' });
+    }
+
     this.auth
       .signInWithPhoneNumber('+1 650-555-1234', this.recaptchaVerifier)
       .then(function (confirmationResult) {
